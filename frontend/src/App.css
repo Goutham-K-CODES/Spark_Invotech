@@ -383,6 +383,58 @@ body {
   }
 }
 
+/* Scroll-based animation enhancements */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Enhanced 3D scroll animations */
+.scroll-3d-container {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Improved card hover animations */
+.product-card {
+  transform-style: preserve-3d;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover {
+  transform: translateY(-12px) rotateX(2deg);
+}
+
+/* Smooth parallax effect */
+@media (min-width: 768px) {
+  .parallax-element {
+    will-change: transform;
+  }
+}
+
+/* Enhanced rounded corners for better visual appeal */
+.rounded-card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.rounded-card:hover {
+  box-shadow: 0 20px 48px rgba(0, 224, 255, 0.15);
+}
+
+/* Image rounded corners with smooth transitions */
+.rounded-image {
+  border-radius: 16px;
+  transition: transform 0.4s ease, border-radius 0.3s ease;
+}
+
+.rounded-image:hover {
+  transform: scale(1.05);
+  border-radius: 20px;
+}
+
 /* Utility classes */
 .container {
   max-width: 1400px;

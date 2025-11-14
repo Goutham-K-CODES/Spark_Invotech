@@ -1,14 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
 import Spline from '@splinetool/react-spline';
 import { companyInfo } from '../data/mock';
 
 const Hero = () => {
   const [is3DLoaded, setIs3DLoaded] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const splineRef = useRef(null);
 
   const handle3DLoad = () => {
     setIs3DLoaded(true);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      
+      // Apply scroll-based transformation to 3D scene
+      if (splineRef.current) {
+        const scrollFactor = currentScrollY * 0.5;
+        const rotationY = scrollFactor * 0.1;
+        const rotationX = Math.sin(scrollFactor * 0.01) * 10;
+        
+        splineRef.current.style.transform = `
+          scale(${window.innerWidth >= 1024 ? '1' : '0.8'}) 
+          rotateY(${rotationY}deg) 
+          rotateX(${rotationX}deg) 
+          translateZ(${Math.sin(scrollFactor * 0.005) * 20}px)
+        `;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <section
@@ -112,7 +138,20 @@ const Hero = () => {
                 overflow: 'visible'
               }}
             >
-              <Spline scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode" />
+              <div
+                ref={splineRef}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  transition: 'transform 0.1s ease-out',
+                  transformStyle: 'preserve-3d'
+                }}
+              >
+                <Spline 
+                  scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode"
+                  onLoad={handle3DLoad}
+                />
+              </div>
             </div>
             
             {/* Mobile 3D Spline - Optimized */}
@@ -135,19 +174,28 @@ const Hero = () => {
                   </div>
                 </div>
               )}
-              <Spline 
-                scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode"
-                onLoad={handle3DLoad}
-                className="spline-mobile"
+              <div
+                ref={splineRef}
                 style={{
                   width: '100%',
                   height: '100%',
-                  transform: 'scale(0.8)',
                   transformOrigin: 'center center',
-                  opacity: is3DLoaded ? 1 : 0,
-                  transition: 'opacity 0.5s ease-in-out'
+                  transition: 'transform 0.1s ease-out',
+                  transformStyle: 'preserve-3d'
                 }}
-              />
+              >
+                <Spline 
+                  scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode"
+                  onLoad={handle3DLoad}
+                  className="spline-mobile"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    opacity: is3DLoaded ? 1 : 0,
+                    transition: 'opacity 0.5s ease-in-out'
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>
