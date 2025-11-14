@@ -251,13 +251,15 @@ const Services = ({
               flex-direction: column;
               height: auto;
               border-radius: 12px;
+              margin: 0 1rem;
             }
 
             .accordion-panel {
               flex: none !important;
-              height: 80px;
+              height: 70px;
               border-right: none;
               border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+              touch-action: manipulation;
             }
 
             .accordion-panel:last-child {
@@ -265,34 +267,92 @@ const Services = ({
             }
 
             .accordion-panel.active {
-              height: 400px;
+              height: 450px;
             }
 
             .panel-title {
               position: absolute;
-              left: 24px;
+              left: 20px;
               top: 50%;
               transform: translateY(-50%) rotate(0deg);
               font-size: 16px;
+              font-weight: 600;
+              pointer-events: none;
             }
 
             .panel-content {
               left: 0;
-              top: 80px;
+              top: 70px;
               padding: 20px;
-              height: calc(100% - 80px);
+              height: calc(100% - 70px);
+              overflow-y: auto;
+              -webkit-overflow-scrolling: touch;
             }
 
             .content-title {
-              font-size: 24px;
+              font-size: 22px;
+              line-height: 1.3;
+              margin-bottom: 12px;
             }
 
             .content-description {
               font-size: 14px;
+              line-height: 1.5;
+              margin-bottom: 20px;
             }
 
             .content-offers-title {
-              font-size: 18px;
+              font-size: 16px;
+              margin-bottom: 12px;
+            }
+
+            .content-offers-item {
+              font-size: 13px;
+              margin-bottom: 8px;
+              line-height: 1.4;
+            }
+          }
+
+          /* Extra small mobile devices */
+          @media (max-width: 480px) {
+            .horizontal-accordion {
+              margin: 0 0.5rem;
+              border-radius: 8px;
+            }
+
+            .accordion-panel {
+              height: 60px;
+            }
+
+            .accordion-panel.active {
+              height: 400px;
+            }
+
+            .panel-title {
+              left: 16px;
+              font-size: 14px;
+            }
+
+            .panel-content {
+              top: 60px;
+              padding: 16px;
+              height: calc(100% - 60px);
+            }
+
+            .content-title {
+              font-size: 20px;
+            }
+
+            .content-description {
+              font-size: 13px;
+            }
+
+            .content-offers-title {
+              font-size: 15px;
+            }
+
+            .content-offers-item {
+              font-size: 12px;
             }
           }
 
@@ -326,9 +386,9 @@ const Services = ({
       >
         <div className="container">
           {/* Section Header */}
-          <div className="text-center mb-20 animate-fade-in-up">
+          <div className="text-center mb-12 md:mb-20 animate-fade-in-up px-4">
             <h2
-              className="text-4xl md:text-5xl font-semibold mb-6"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
               style={{
                 color: 'var(--text-primary)',
                 lineHeight: '1.2',
@@ -338,7 +398,7 @@ const Services = ({
               Innovating Beyond Boundaries
             </h2>
             <p
-              className="text-xl max-w-3xl mx-auto"
+              className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
               style={{ color: 'var(--text-secondary)' }}
             >
               Comprehensive services to power your digital transformation

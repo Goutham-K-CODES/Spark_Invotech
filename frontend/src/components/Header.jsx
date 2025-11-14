@@ -30,23 +30,23 @@ const Header = () => {
       }}
     >
       <div className="container">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <a
             href="#home"
-            className="text-2xl font-semibold"
+            className="text-xl md:text-2xl font-semibold"
             style={{ color: '#ffffff' }}
           >
             {companyInfo.name}
           </a>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6 lg:gap-8">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-lg font-normal transition-colors duration-300"
+                className="text-base lg:text-lg font-normal transition-colors duration-300"
                 style={{
                   color: 'var(--text-muted)'
                 }}
@@ -62,7 +62,7 @@ const Header = () => {
             ))}
             <a
               href="#contact"
-              className="px-6 py-3 font-medium transition-all duration-300 rounded"
+              className="px-4 py-2 lg:px-6 lg:py-3 font-medium transition-all duration-300 rounded text-sm lg:text-base"
               style={{
                 backgroundColor: '#3b82f6',
                 color: '#ffffff',
@@ -81,9 +81,10 @@ const Header = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2"
+            className="md:hidden p-3 -m-2 touch-manipulation"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             style={{ color: 'var(--text-primary)' }}
+            aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -93,31 +94,40 @@ const Header = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div
-          className="md:hidden"
+          className="md:hidden fixed inset-0 top-16 z-40"
           style={{
             background: 'rgba(0, 0, 0, 0.98)',
-            borderTop: '1px solid var(--border-subtle)'
+            backdropFilter: 'blur(10px)'
           }}
         >
-          <nav className="container py-6 flex flex-col gap-4">
+          <nav className="container py-8 flex flex-col gap-6 h-full">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-lg font-normal py-2"
+                className="text-xl font-normal py-4 border-b border-gray-800"
                 style={{ color: 'var(--text-muted)' }}
                 onClick={() => setIsMobileMenuOpen(false)}
+                onTouchStart={(e) => {
+                  e.target.style.color = 'var(--text-primary)';
+                }}
+                onTouchEnd={(e) => {
+                  setTimeout(() => {
+                    e.target.style.color = 'var(--text-muted)';
+                  }, 150);
+                }}
               >
                 {link.name}
               </a>
             ))}
             <a
               href="#contact"
-              className="px-6 py-3 font-medium text-center rounded mt-4"
+              className="px-8 py-4 font-medium text-center rounded mt-6 text-lg touch-manipulation"
               style={{
                 backgroundColor: '#3b82f6',
                 color: '#ffffff',
-                border: 'none'
+                border: 'none',
+                minHeight: '48px'
               }}
               onClick={() => setIsMobileMenuOpen(false)}
             >

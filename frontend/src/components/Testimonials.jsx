@@ -64,6 +64,7 @@ const Testimonials = () => {
           .testimonials-scroll-container {
             scrollbar-width: none;
             -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch;
           }
           
           .testimonials-scroll-container::-webkit-scrollbar {
@@ -73,6 +74,48 @@ const Testimonials = () => {
           .testimonials-flex-container {
             animation: none;
             will-change: transform;
+          }
+
+          /* Mobile responsiveness for testimonials */
+          @media (max-width: 768px) {
+            .testimonial-card {
+              min-width: 280px !important;
+              margin-right: 16px !important;
+              padding: 20px !important;
+            }
+            
+            .testimonial-quote {
+              font-size: 14px !important;
+              line-height: 1.5 !important;
+            }
+            
+            .testimonial-name {
+              font-size: 16px !important;
+            }
+            
+            .testimonial-role {
+              font-size: 13px !important;
+            }
+          }
+
+          @media (max-width: 480px) {
+            .testimonial-card {
+              min-width: 260px !important;
+              margin-right: 12px !important;
+              padding: 16px !important;
+            }
+            
+            .testimonial-quote {
+              font-size: 13px !important;
+            }
+            
+            .testimonial-name {
+              font-size: 15px !important;
+            }
+            
+            .testimonial-role {
+              font-size: 12px !important;
+            }
           }
         `}
       </style>
@@ -84,9 +127,9 @@ const Testimonials = () => {
     >
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-20 animate-fade-in-up">
+        <div className="text-center mb-12 md:mb-20 animate-fade-in-up px-4">
           <h2
-            className="text-4xl md:text-5xl font-semibold mb-6"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
             style={{
               color: 'var(--text-primary)',
               lineHeight: '1.2',
@@ -96,7 +139,7 @@ const Testimonials = () => {
             What Our Partners Say
           </h2>
           <p
-            className="text-xl max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
             style={{ color: 'var(--text-secondary)' }}
           >
             Trusted by industry leaders for innovative solutions
@@ -121,7 +164,7 @@ const Testimonials = () => {
             {[...testimonials, ...testimonials, ...testimonials].map((testimonial, index) => (
               <div
                 key={`${testimonial.id}-${index}`}
-                className="animate-fade-in-up group flex-none"
+                className="testimonial-card animate-fade-in-up group flex-none"
                 style={{
                   animationDelay: `${index * 0.15}s`,
                   background: 'var(--bg-primary)',
@@ -130,7 +173,8 @@ const Testimonials = () => {
                   transition: 'all 0.4s ease-in-out',
                   position: 'relative',
                   width: '400px',
-                  minWidth: '400px'
+                  minWidth: '400px',
+                  borderRadius: '12px'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = 'var(--brand-primary)';
@@ -163,7 +207,7 @@ const Testimonials = () => {
 
               {/* Testimonial Text */}
               <p
-                className="text-lg mb-8 relative z-10"
+                className="testimonial-quote text-lg mb-8 relative z-10"
                 style={{
                   color: 'var(--text-secondary)',
                   lineHeight: '1.6'
@@ -178,13 +222,13 @@ const Testimonials = () => {
                 style={{ borderTop: '1px solid var(--border-subtle)' }}
               >
                 <div
-                  className="font-semibold text-lg mb-1"
+                  className="testimonial-name font-semibold text-lg mb-1"
                   style={{ color: 'var(--text-primary)' }}
                 >
                   {testimonial.name}
                 </div>
                 <div
-                  className="text-base"
+                  className="testimonial-role text-base"
                   style={{ color: 'var(--text-muted)' }}
                 >
                   {testimonial.company}
