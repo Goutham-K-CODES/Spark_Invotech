@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import AnimatedText from './ui/AnimatedText';
 
 /**
  * HorizontalAccordion Component
@@ -381,28 +382,33 @@ const Services = ({
 
       <section
         id="services"
-        className="py-32 relative"
+        className="py-16 relative"
         style={{ background: 'var(--bg-primary)' }}
       >
         <div className="container">
           {/* Section Header */}
-          <div className="text-center mb-12 md:mb-20 animate-fade-in-up px-4">
-            <h2
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
-              style={{
-                color: 'var(--text-primary)',
-                lineHeight: '1.2',
-                letterSpacing: '-0.02em'
-              }}
-            >
-              Innovating Beyond Boundaries
-            </h2>
-            <p
-              className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Comprehensive services to power your digital transformation
-            </p>
+          <div className="text-center mb-8 md:mb-12 animate-fade-in-up px-4">
+            <AnimatedText animationType="reveal" delay={100}>
+              <h2
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
+                style={{
+                  color: 'var(--text-primary)',
+                  lineHeight: '1.2',
+                  letterSpacing: '-0.02em'
+                }}
+              >
+                Innovating Beyond Boundaries
+              </h2>
+            </AnimatedText>
+            
+            <AnimatedText animationType="reveal" delay={300}>
+              <p
+                className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Comprehensive services to power your digital transformation
+              </p>
+            </AnimatedText>
           </div>
 
           {/* Horizontal Accordion */}

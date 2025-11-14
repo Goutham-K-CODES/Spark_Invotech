@@ -16,12 +16,13 @@ const About = () => {
   // Intersection Observer for scroll-triggered animations
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.3,
-      rootMargin: '0px 0px -100px 0px'
+      threshold: 0.1, // Reduced threshold for earlier triggering
+      rootMargin: '0px 0px -50px 0px' // Reduced margin for earlier triggering
     };
 
     const imageObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        console.log('Image intersecting:', entry.isIntersecting); // Debug log
         if (entry.isIntersecting) {
           setIsImageVisible(true);
         }
@@ -30,6 +31,7 @@ const About = () => {
 
     const statsObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
+        console.log('Stats intersecting:', entry.isIntersecting); // Debug log
         if (entry.isIntersecting && !isStatsVisible) {
           setIsStatsVisible(true);
           animateCounters();
@@ -53,6 +55,7 @@ const About = () => {
 
   // Animated counter function
   const animateCounters = () => {
+    console.log('Starting counter animation'); // Debug log
     const duration = 2000; // 2 seconds
     const frameRate = 60;
     const totalFrames = (duration / 1000) * frameRate;
@@ -74,6 +77,7 @@ const About = () => {
 
       if (currentFrame >= totalFrames) {
         clearInterval(timer);
+        console.log('Counter animation completed'); // Debug log
         // Ensure final values are exact
         setAnimatedStats(prev => prev.map(stat => ({
           ...stat,
@@ -86,37 +90,46 @@ const About = () => {
   return (
     <section
       id="about"
-      className="py-32 relative"
+      className="py-16 relative"
       style={{ background: 'var(--bg-primary)' }}
     >
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="grid md:grid-cols-2 gap-8 items-center">
           {/* Left - Image with slide-in animation */}
           <div 
             ref={imageRef}
-            className={`relative transition-all duration-1000 ease-out ${
+            className={`relative transition-all duration-1000 ease-out custom-cursor-tech ${
               isImageVisible 
                 ? 'translate-x-0 opacity-100' 
                 : '-translate-x-full opacity-0'
             }`}
           >
             <div
-              className="relative overflow-hidden"
+              className="relative overflow-hidden about-image-container"
               style={{
                 border: '1px solid var(--border-subtle)',
                 padding: '4px',
                 borderRadius: '16px',
-                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)'
+                boxShadow: '0 20px 40px rgba(0, 0, 0, 0.3)',
+                background: 'linear-gradient(135deg, rgba(0, 224, 255, 0.05) 0%, rgba(10, 25, 47, 0.1) 100%)'
               }}
             >
               <img
-                src={images.aboutTech}
-                alt="Technology"
-                className="w-full h-auto object-cover"
+                src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop&q=80"
+                alt="Technology Innovation at Spark Invotech"
+                className="w-full h-auto object-cover transition-transform duration-500 hover:scale-105"
                 style={{
                   filter: 'brightness(0.9) contrast(1.1)',
-                  borderRadius: '12px'
+                  borderRadius: '12px',
+                  minHeight: '300px',
+                  maxHeight: '500px'
                 }}
+                onError={(e) => {
+                  console.log('Image failed to load, using fallback');
+                  e.target.src = 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?w=800&h=600&fit=crop&q=80';
+                }}
+                onLoad={() => console.log('Image loaded successfully')}
+                loading="lazy"
               />
               {/* Enhanced glow overlay */}
               <div
@@ -155,7 +168,7 @@ const About = () => {
               {aboutContent.title}
             </h2>
             <p
-              className="text-xl leading-relaxed"
+              className="text-xl leading-relaxed mb-8"
               style={{
                 color: 'var(--text-secondary)',
                 lineHeight: '1.6'
@@ -167,7 +180,7 @@ const About = () => {
             {/* Animated Stats */}
             <div 
               ref={statsRef}
-              className="grid grid-cols-3 gap-8 mt-12"
+              className="grid grid-cols-3 gap-8 mt-8"
             >
               {animatedStats.map((stat, index) => (
                 <div 

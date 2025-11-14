@@ -67,7 +67,7 @@ const Hero = () => {
               {companyInfo.tagline}
             </h1>
             <p
-              className="text-lg sm:text-xl md:text-2xl mb-8 md:mb-12 max-w-2xl mx-auto lg:mx-0"
+                            className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-6 lg:mb-8 max-w-3xl mx-auto lg:mx-0"
               style={{
                 color: 'var(--text-secondary)',
                 lineHeight: '1.5'

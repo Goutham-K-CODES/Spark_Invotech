@@ -20,18 +20,22 @@ const Footer = () => {
         borderTop: '1px solid var(--border-subtle)'
       }}
     >
-      <div className="container py-12 md:py-20 px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-16 mb-8 md:mb-16">
+      <div className="container py-6 md:py-8 px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-4 md:mb-6">
           {/* Company Info */}
-          <div className="text-center md:text-left">
-            <h3
-              className="text-xl md:text-2xl font-semibold mb-3 md:mb-4"
-              style={{ color: 'var(--brand-primary)' }}
-            >
-              {companyInfo.name}
-            </h3>
+          <div className="text-center md:text-left mt-4">
+            <div className="flex items-center justify-center md:justify-start mb-3">
+              <img 
+                src="/spark.png" 
+                alt="Spark Invotech Logo" 
+                className="h-12 sm:h-14 md:h-20 lg:h-24 w-auto"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                }}
+              />
+            </div>
             <p
-              className="text-sm md:text-base mb-4 md:mb-6"
+              className="text-base md:text-lg mb-4 md:mb-6"
               style={{ color: 'var(--text-secondary)', lineHeight: '1.6' }}
             >
               Bridging the gap between industry and innovation through intelligent IoT solutions.
@@ -39,26 +43,20 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left mt-4">
             <h4
-              className="text-lg md:text-xl font-semibold mb-4 md:mb-6"
+              className="text-xl md:text-2xl font-semibold mb-3 md:mb-4"
               style={{ color: 'var(--text-primary)' }}
             >
               Quick Links
             </h4>
-            <nav className="flex flex-col gap-3 md:gap-4">
+            <nav className="flex flex-col gap-2 md:gap-3">
               {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-sm md:text-base transition-colors duration-300 touch-manipulation py-1"
-                  style={{ color: 'var(--text-muted)' }}
-                  onMouseEnter={(e) => {
-                    e.target.style.color = 'var(--brand-primary)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.color = 'var(--text-muted)';
-                  }}
+                  className="text-base md:text-lg hover:text-cyan-400 transition-colors duration-300 cursor-pointer"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
                   {link.name}
                 </a>
@@ -67,36 +65,31 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="text-center md:text-left">
+          <div className="text-center md:text-left mt-4">
             <h4
-              className="text-lg md:text-xl font-semibold mb-4 md:mb-6"
+              className="text-xl md:text-2xl font-semibold mb-3 md:mb-4"
               style={{ color: 'var(--text-primary)' }}
             >
               Contact
             </h4>
-            <div className="space-y-3 md:space-y-4">
+            <div className="flex flex-col gap-2 md:gap-3">
               <p
-                className="text-sm md:text-base"
+                className="text-base md:text-lg"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                <a
-                  href={`mailto:${companyInfo.email}`}
-                  className="transition-colors duration-300 touch-manipulation"
-                  onMouseEnter={(e) => {
-                    e.target.style.color = 'var(--brand-primary)';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.target.style.color = 'var(--text-secondary)';
-                  }}
-                >
-                  {companyInfo.email}
-                </a>
+                Email: {companyInfo.email}
               </p>
               <p
-                className="text-sm md:text-base"
+                className="text-base md:text-lg"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                {companyInfo.location}
+                Phone: {companyInfo.phone}
+              </p>
+              <p
+                className="text-base md:text-lg"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                Address: {companyInfo.address}
               </p>
             </div>
           </div>

@@ -104,7 +104,7 @@ export const testimonials = [
 
 export const images = {
   heroBackground: "https://images.unsplash.com/photo-1625571705670-38fc39c923ba?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwxfHxJb1QlMjBkZXZpY2VzfGVufDB8fHx8MTc2MTkyODQ0Nnww&ixlib=rb-4.1.0&q=85",
-  aboutTech: "https://images.unsplash.com/photo-1717444308866-dcfc964bab23?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwzfHxJb1QlMjBkZXZpY2VzfGVufDB8fHx8MTc2MTkyODQ0Nnww&ixlib=rb-4.1.0&q=85",
+  aboutTech: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&h=600&fit=crop&q=80",
   iotDevices: "https://images.unsplash.com/photo-1596658591534-591d75e2f2f7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDJ8MHwxfHNlYXJjaHwyfHxJb1QlMjBkZXZpY2VzfGVufDB8fHx8MTc2MTkyODQ0Nnww&ixlib=rb-4.1.0&q=85",
   automation: "https://images.unsplash.com/photo-1761195696590-3490ea770aa1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHwxfHxhdXRvbWF0aW9uJTIwdGVjaG5vbG9neXxlbnwwfHx8fDE3NjE5Mjg0NTF8MA&ixlib=rb-4.1.0&q=85",
   industrial: "https://images.unsplash.com/photo-1689942009554-759940987be0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2NjZ8MHwxfHNlYXJjaHwzfHxhdXRvbWF0aW9uJTIwdGVjaG5vbG9neXxlbnwwfHx8fDE3NjE5Mjg0NTF8MA&ixlib=rb-4.1.0&q=85",

@@ -1,8 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, CheckCircle } from 'lucide-react';
 import { products, images } from '../data/mock';
+import AnimatedText from './ui/AnimatedText';
 
 const Products = () => {
+  const [visibleProducts, setVisibleProducts] = useState(new Set());
+  const productRefs = useRef([]);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1, // Lowered threshold for easier triggering
+      rootMargin: '0px 0px -20px 0px' // Reduced margin
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const index = parseInt(entry.target.dataset.index);
+          console.log(`Product ${index} is now visible and animating`);
+          setVisibleProducts(prev => new Set([...prev, index]));
+        }
+      });
+    }, observerOptions);
+
+    productRefs.current.forEach((ref) => {
+      if (ref) observer.observe(ref);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="products"
@@ -11,49 +38,58 @@ const Products = () => {
     >
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-20 animate-fade-in-up px-4">
-          <h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
-            style={{
-              color: 'var(--text-primary)',
-              lineHeight: '1.2',
-              letterSpacing: '-0.02em'
-            }}
-          >
-            Transforming Ideas into Intelligent Solutions
-          </h2>
-          <p
-            className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Innovative products designed to revolutionize industrial operations
-          </p>
+        <div className="text-center mb-8 md:mb-12 animate-fade-in-up px-4">
+          <AnimatedText animationType="reveal" delay={100}>
+            <h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
+              style={{
+                color: 'var(--text-primary)',
+                lineHeight: '1.2',
+                letterSpacing: '-0.02em'
+              }}
+            >
+              Transforming Ideas into Intelligent Solutions
+            </h2>
+          </AnimatedText>
+          
+          <AnimatedText animationType="reveal" delay={300}>
+            <p
+              className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Innovative products designed to revolutionize industrial operations
+            </p>
+          </AnimatedText>
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 px-4">
-          {products.map((product, index) => (
+                <div className="grid md:grid-cols-2 gap-12">
+          {products.map((product, index) => {
+            const isVisible = visibleProducts.has(index);
+            const slideDirection = index % 2 === 0 ? 'slide-from-left' : 'slide-from-right';
+            
+            return (
             <div
               key={product.id}
-              className="animate-fade-in-up group"
+              ref={(el) => {
+                productRefs.current[index] = el;
+                if (el) {
+                  el.dataset.index = index;
+                  console.log(`Product ${index} ref set:`, product.title);
+                }
+              }}
+              className={`group relative overflow-hidden rounded-3xl transition-all duration-1000 ease-out ${
+                isVisible ? 'slide-in-visible' : slideDirection
+              }`}
               style={{
-                animationDelay: `${index * 0.2}s`,
-                background: 'var(--bg-primary)',
+                background: 'var(--card-bg)',
                 border: '1px solid var(--border-subtle)',
+                borderRadius: '20px', // Enhanced rounded corners
+                transitionDelay: `${index * 200}ms`,
                 padding: '32px',
-                borderRadius: '20px',
-                transition: 'all 0.4s ease-in-out',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--brand-primary)';
-                e.currentTarget.style.transform = 'translateY(-8px)';
-                e.currentTarget.style.boxShadow = '0 20px 48px rgba(0, 224, 255, 0.15)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--border-subtle)';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+                boxShadow: isVisible 
+                  ? '0 20px 48px rgba(0, 224, 255, 0.15)' 
+                  : '0 8px 32px rgba(0, 0, 0, 0.1)'
               }}
             >
               {/* Product Image */}
@@ -170,7 +206,8 @@ const Products = () => {
                 <ArrowRight size={20} />
               </button>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

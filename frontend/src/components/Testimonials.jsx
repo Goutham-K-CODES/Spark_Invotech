@@ -1,10 +1,46 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Star, Quote } from 'lucide-react';
 import { testimonials } from '../data/mock';
+import AnimatedText from './ui/AnimatedText';
 
 const Testimonials = () => {
   const scrollContainerRef = useRef(null);
   const intervalRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
+  const scrollToIndex = (index) => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+    
+    const cardWidth = 416; // 400px + 16px gap
+    const scrollPosition = index * cardWidth;
+    
+    // Stop auto-scrolling temporarily
+    setIsAutoScrolling(false);
+    
+    // Smooth scroll to the specific testimonial
+    scrollContainer.scrollTo({ 
+      left: scrollPosition, 
+      behavior: 'smooth' 
+    });
+    
+    // Update current index
+    setCurrentIndex(index);
+    
+    // Resume auto-scrolling after 5 seconds
+    setTimeout(() => setIsAutoScrolling(true), 5000);
+  };
+
+  const goToPrevious = () => {
+    const newIndex = currentIndex === 0 ? testimonials.length - 1 : currentIndex - 1;
+    scrollToIndex(newIndex);
+  };
+
+  const goToNext = () => {
+    const newIndex = currentIndex === testimonials.length - 1 ? 0 : currentIndex + 1;
+    scrollToIndex(newIndex);
+  };
 
   useEffect(() => {
     const scrollContainer = scrollContainerRef.current;
@@ -16,11 +52,20 @@ const Testimonials = () => {
     const totalWidth = testimonials.length * cardWidth;
 
     const autoScroll = () => {
+      if (!isAutoScrolling) return;
+      
       scrollPosition += scrollSpeed;
+      
+      // Update current index based on scroll position
+      const newIndex = Math.floor(scrollPosition / cardWidth) % testimonials.length;
+      if (newIndex !== currentIndex) {
+        setCurrentIndex(newIndex);
+      }
       
       // Reset to beginning when we've scrolled past original testimonials
       if (scrollPosition >= totalWidth) {
         scrollPosition = 0;
+        setCurrentIndex(0);
       }
       
       scrollContainer.scrollLeft = scrollPosition;
@@ -120,30 +165,35 @@ const Testimonials = () => {
         `}
       </style>
       
-      <section
+          <section
       id="testimonials"
-      className="py-32 relative"
-      style={{ background: 'var(--bg-secondary)' }}
+      className="py-16 relative overflow-hidden"
+      style={{ background: 'var(--bg-primary)' }}
     >
       <div className="container">
         {/* Section Header */}
-        <div className="text-center mb-12 md:mb-20 animate-fade-in-up px-4">
-          <h2
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
-            style={{
-              color: 'var(--text-primary)',
-              lineHeight: '1.2',
-              letterSpacing: '-0.02em'
-            }}
-          >
-            What Our Partners Say
-          </h2>
-          <p
-            className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Trusted by industry leaders for innovative solutions
-          </p>
+        <div className="text-center mb-8 md:mb-12 animate-fade-in-up px-4">
+          <AnimatedText animationType="reveal" delay={100}>
+            <h2
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mb-4 md:mb-6"
+              style={{
+                color: 'var(--text-primary)',
+                lineHeight: '1.2',
+                letterSpacing: '-0.02em'
+              }}
+            >
+              What Our Partners Say
+            </h2>
+          </AnimatedText>
+          
+          <AnimatedText animationType="reveal" delay={300}>
+            <p
+              className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-4"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Real experiences from industry leaders who trust our solutions
+            </p>
+          </AnimatedText>
         </div>
 
         {/* Testimonials Horizontal Scroll */}

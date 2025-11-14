@@ -34,10 +34,24 @@ const Header = () => {
           {/* Logo */}
           <a
             href="#home"
-            className="text-xl md:text-2xl font-semibold"
+            className="flex items-center gap-3"
             style={{ color: '#ffffff' }}
           >
-            {companyInfo.name}
+            <img 
+              src="/spark.png" 
+              alt="Spark Invotech Logo" 
+              className="h-10 sm:h-12 md:h-16 lg:h-20 w-auto"
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.nextSibling.style.display = 'block';
+              }}
+            />
+            <span 
+              className="text-xl md:text-2xl font-semibold"
+              style={{ display: 'none' }}
+            >
+              {companyInfo.name}
+            </span>
           </a>
 
           {/* Desktop Navigation */}
