@@ -358,6 +358,31 @@ body {
   }
 }
 
+/* 3D Spline mobile optimizations */
+@media (max-width: 1023px) {
+  canvas {
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  /* Reduce 3D complexity on mobile */
+  .spline-mobile {
+    image-rendering: optimizeSpeed;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+}
+
+/* Prevent 3D performance issues on very small screens */
+@media (max-width: 480px) {
+  canvas {
+    max-width: 100%;
+    height: auto !important;
+  }
+}
+
 /* Utility classes */
 .container {
   max-width: 1400px;

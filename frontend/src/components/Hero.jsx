@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import Spline from '@splinetool/react-spline';
 import { companyInfo } from '../data/mock';
 
 const Hero = () => {
+  const [is3DLoaded, setIs3DLoaded] = useState(false);
+
+  const handle3DLoad = () => {
+    setIs3DLoaded(true);
+  };
+
   return (
     <section
       id="home"
@@ -97,6 +103,7 @@ const Hero = () => {
 
           {/* Right Content - 3D Spline */}
           <div className="relative flex items-center justify-center mt-8 lg:mt-0" style={{ minHeight: '400px' }}>
+            {/* Desktop 3D Spline */}
             <div
               className="relative hidden lg:block"
               style={{
@@ -107,14 +114,40 @@ const Hero = () => {
             >
               <Spline scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode" />
             </div>
-            {/* Mobile placeholder */}
-            <div className="lg:hidden w-full h-80 rounded-lg border border-gray-700 flex items-center justify-center">
-              <div className="text-center">
-                <div className="w-24 h-24 mx-auto mb-4 bg-cyan-400/20 rounded-full flex items-center justify-center">
-                  <div className="w-12 h-12 bg-cyan-400 rounded-full animate-pulse"></div>
+            
+            {/* Mobile 3D Spline - Optimized */}
+            <div
+              className="relative lg:hidden w-full"
+              style={{
+                height: '350px',
+                maxWidth: '400px',
+                overflow: 'hidden'
+              }}
+            >
+              {/* Loading placeholder */}
+              {!is3DLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-gray-900/20 rounded-lg backdrop-blur-sm">
+                  <div className="text-center">
+                    <div className="w-16 h-16 mx-auto mb-3 bg-cyan-400/20 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-cyan-400 rounded-full animate-pulse"></div>
+                    </div>
+                    <p className="text-gray-400 text-sm">Loading 3D Scene...</p>
+                  </div>
                 </div>
-                <p className="text-gray-400 text-sm">3D Interactive Demo</p>
-              </div>
+              )}
+              <Spline 
+                scene="https://prod.spline.design/NbVmy6DPLhY-5Lvg/scene.splinecode"
+                onLoad={handle3DLoad}
+                className="spline-mobile"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  transform: 'scale(0.8)',
+                  transformOrigin: 'center center',
+                  opacity: is3DLoaded ? 1 : 0,
+                  transition: 'opacity 0.5s ease-in-out'
+                }}
+              />
             </div>
           </div>
         </div>
